@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { socket } from './socket';
 import axios from 'axios';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+import Homepage from './components/Homepage';
+import Game from './components/Game';
 
 export default function App() {
   const [username, setUsername] = useState('');
@@ -64,35 +67,16 @@ export default function App() {
         setTennisRealtimedata(JSON.stringify(data))
         // Update UI or perform other actions based on the data
       });
+      
     };
   }, []);
 
   return (
-    <div className="App">
-      {/* <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-      <p id='responseData'>Hello world!</p> */}
-      
-      <h1>Cricket Real-time Data:</h1>
-      <p id='cricketrealtimeData'>{cricketrealtimedata}</p>
-      <h1>Soccer Real-time Data:</h1>
-      <p id='soccerrealtimeData'>{soccerrealtimedata}</p>
-      <h1>Tennis Real-time Data:</h1>
-      <p id='tennisrealtimeData'>{tennisrealtimedata}</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Homepage cricketrealtimedata={cricketrealtimedata} soccerrealtimedata={soccerrealtimedata} tennisrealtimedata={tennisrealtimedata} />} />
+        <Route path='/page' element={<Game/>} />
+    </Routes>
+    </BrowserRouter>
   );
 }
