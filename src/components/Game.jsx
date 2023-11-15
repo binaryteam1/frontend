@@ -18,7 +18,7 @@ function Game() {
     }
     eventType = queryData["eventType"];
     eventId = queryData["eventId"];
-    marketId = queryData["maemonkey"];
+    marketId = queryData["marketId"];
     // Make a request to the scraper endpoint on your server
     fetch(`http://172.31.35.21:5000/scrape`, {
       method: "POST",
