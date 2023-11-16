@@ -21,7 +21,7 @@ function Game() {
     marketId = queryData["marketId"];
 
     // Append query parameters to the URL
-    const url = `http://172.31.35.21:5000/page?${queryParams.toString()}`;
+    const url = `http://13.215.64.107:5000/page?${queryParams.toString()}`;
 
     // Make a request to the scraper endpoint on your server
     fetch(url, {
