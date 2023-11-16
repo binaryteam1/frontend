@@ -35,21 +35,22 @@ export default function App() {
     function onDisconnect() {
       setIsConnected(false);
     }
-
+    
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
 
     // Initial request for real-time data
-    socket.emit("get-skydata");
+    socket.emit("get-data");
 
     // Set up a timer to send real-time data requests every 5 seconds
     const timerId = setInterval(() => {
-      socket.emit("get-skydata");
+      socket.emit("get-data");
     }, 5000);
 
     // Clean up the timer when the component unmounts
     return () => {
       clearInterval(timerId);
+
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
       socket.on("cricket-receive-data", (data) => {

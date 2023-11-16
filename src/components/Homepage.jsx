@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-function Homepage({cricketrealtimedata,soccerrealtimedata,tennisrealtimedata}) {
+function Homepage({ cricketrealtimedata, soccerrealtimedata, tennisrealtimedata }) {
+  useEffect(() => {
+    async function fetchData() {
+      await fetch('http://13.215.64.107:5000', {
+        method: "GET"
+      })
+    }
+    fetchData()
+  })
   return (
     <div className="App">
     {/* <h1>Login</h1>
