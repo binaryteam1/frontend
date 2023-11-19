@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Game from './components/Game';
+import Category from './components/Category';
 
 export default function App() {
   const [username, setUsername] = useState('');
@@ -76,7 +77,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Homepage cricketrealtimedata={cricketrealtimedata} soccerrealtimedata={soccerrealtimedata} tennisrealtimedata={tennisrealtimedata} />} />
-        <Route path='/page' element={<Game/>} />
+        {/* <Route path='/page' element={<Game />} /> */}
+        <Route path='/category' element={<Category />} />
+        
     </Routes>
     </BrowserRouter>
   );

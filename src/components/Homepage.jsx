@@ -2,12 +2,18 @@ import React, { useEffect } from 'react'
 
 function Homepage({ cricketrealtimedata, soccerrealtimedata, tennisrealtimedata }) {
   useEffect(() => {
+    
     async function fetchData() {
       await fetch('http://13.215.64.107:5000', {
         method: "GET"
       })
     }
-    fetchData()
+    try {
+      fetchData()
+    } catch (error) {
+      console.log(error)
+    }
+    
   })
   return (
     <div className="App">

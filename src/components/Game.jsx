@@ -19,10 +19,10 @@ function Game() {
     eventType = queryData["eventType"];
     eventId = queryData["eventId"];
     marketId = queryData["marketId"];
-    
+
     // Append query parameters to the URL
-    const url = `http://localhost:5000/page?${queryParams.toString()}`;
-    console.log(url)
+    const url = `http://localhost:5001/page?${queryParams.toString()}`;
+    console.log(url);
 
     // Make a request to the scraper endpoint on your server
     fetch(url, {
@@ -42,17 +42,20 @@ function Game() {
         const handleSocketResponse = (data) => {
           console.log("Received data from the server:", data);
           setEventData(data);
+
+
         };
 
-        socket.on(eventType + marketId + eventType, handleSocketResponse);
-
         // Clean up the socket event listener when the component is unmounted
+        socket.on(eventType + marketId + eventId, handleSocketResponse);
+        console.log(eventType + marketId + eventId)
+        // Correct the cleanup function to remove the listener
         return () => {
-          
+         
         };
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         console.error("Error making scraper request:", error);
       });
   }, [location.search]);
