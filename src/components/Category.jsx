@@ -40,7 +40,7 @@ function Category() {
   useEffect(() => {
     const filteredData = filtered();
     setFilteredData(filteredData);
-  }, [testData, eventId, marketId, eventCategory]);
+  }, [filteredData, eventId, marketId, eventCategory]);
 
   const filtered = () => {
     return testData.filter((event) => {
