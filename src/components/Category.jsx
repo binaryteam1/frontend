@@ -32,15 +32,13 @@ function Category() {
       // Cleanup socket listeners when component unmounts
     
     };
-  }, [testData]);
+  }, []);
 
   useEffect(() => {
     setFilteredData(filtered());
   }, [testData, eventId, marketId, eventCategory]);
 
   const filtered = () => {
-    if (testData.length === 0) return [];
-
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
