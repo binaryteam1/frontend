@@ -17,9 +17,10 @@ function Category() {
   useEffect(() => {
     const handleSocketData = (data) => {
       setTestData((prevTestData) => {
-        const newDataArray = Array.isArray(data) ? data : [data];
-        const updatedTestData = [...prevTestData, ...newDataArray];
-        return updatedTestData;
+        // const newDataArray = Array.isArray(data) ? data : [data];
+        // const updatedTestData = [...prevTestData, ...newDataArray];
+        // return updatedTestData;
+        return data;
       });
     }
 
