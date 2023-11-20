@@ -13,6 +13,17 @@ function Category() {
   const eventId = queryData["eventId"];
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
+  const filtered = () => {
+    return testData.filter((event) => {
+      const market = event.markets.length > 0 && event.markets[0];
+
+      return (
+        (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
+        (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
+        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
+      );
+    });
+  };
 
   useEffect(() => {
     const handleSocketData = (data) => {
@@ -38,17 +49,7 @@ function Category() {
 
     const filterData = filtered();
     setFilteredData(filterData);
-  const filtered = () => {
-    return testData.filter((event) => {
-      const market = event.markets.length > 0 && event.markets[0];
 
-      return (
-        (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
-        (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
-        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
-      );
-    });
-  };
 
   return (
     <div>
