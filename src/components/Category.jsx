@@ -36,9 +36,9 @@ function Category() {
 
     
     return () => {
-      socket.off(!eventCategory, handleSocketData);
+
     };
-  }, [eventId,marketId,eventCategory]);
+  }, []);
 
   useEffect(() => {
     setFilteredData(filtered());
@@ -51,9 +51,9 @@ function Category() {
       const market = event.markets.length > 0 && event.markets[0];
 
       return (
-       marketId&&eventId&&eventCategory?(!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
+        (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
         (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
-        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory))):eventCategory&&(!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
+        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
       );
     });
   };
