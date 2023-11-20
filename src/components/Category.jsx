@@ -14,8 +14,8 @@ function Category() {
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
 
-  const filtered = (data) => {
-    return data.filter((event) => {
+  const filtered = () => {
+    return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
       return (
@@ -26,45 +26,33 @@ function Category() {
     });
   };
 
-  const handleSocketData = (data) => {
-    setTestData((prevTestData) => {
-      const newDataArray = Array.isArray(data) ? data : [data];
-      const updatedTestData = [...prevTestData, ...newDataArray];
-      // return updatedTestData;
-      return data
-    });
-
-    setFilteredData((prevFilteredData) => {
-      const filter = eventId && marketId && eventCategory ? filtered(prevFilteredData) : prevFilteredData;
-      return filter;
-    });
-  };
-
-
   useEffect(() => {
-    if (eventId) {
-      socket.on(eventId.toString(),'handleSocketData')
+    const handleSocketData = (data) => {
+      setTestData((prevTestData) => {
+        const newDataArray = Array.isArray(data) ? data : [data];
+        const updatedTestData = [...prevTestData, ...newDataArray];
+        // return updatedTestData;
+        return data;
+      });
     }
-
-    else {
-      socket.on('1', handleSocketData);
-      socket.on('2', handleSocketData);
-      socket.on('3', handleSocketData);
-  }
-
+    
+    socket.on('1', handleSocketData);
+    socket.on('2', handleSocketData);
+    socket.on('3', handleSocketData);
 
     return () => {
-      if (eventId) {
-        socket.off(eventId.toString(),'handleSocketData')
-      }
-  
-      else {
-        socket.off('1', handleSocketData);
-        socket.off('2', handleSocketData);
-        socket.off('3', handleSocketData);
-    }
+      // Cleanup socket listeners when component unmounts
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
-  }, [filteredData,eventId, marketId, eventCategory]);
+  }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
+
+  // Update filteredData when testData changes
+  useEffect(() => {
+    const filterData = filtered();
+    setFilteredData(filterData);
+  }, [testData, eventId, marketId, eventCategory]);
 
   return (
     <div>
