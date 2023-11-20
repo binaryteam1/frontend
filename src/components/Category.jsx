@@ -31,7 +31,7 @@ function Category() {
       // Cleanup socket listeners when component unmounts
     
     };
-  }, []);
+  }, [testData]);
 
   useEffect(() => {
     setFilteredData(filtered());
