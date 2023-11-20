@@ -24,24 +24,25 @@
         );
       });
     };
-
+    const handleSocketData = (data) => {
+      setTestData((prevTestData) => {
+        const newDataArray = Array.isArray(data) ? data : [data];
+        const updatedTestData = [...prevTestData, ...newDataArray];
+        // return updatedTestData;
+        return data;
+      });
+    }
+    socket.on('1', handleSocketData);
+    socket.on('2', handleSocketData);
+    socket.on('3', handleSocketData);
     useEffect(() => {
-      const handleSocketData = (data) => {
-        setTestData((prevTestData) => {
-          const newDataArray = Array.isArray(data) ? data : [data];
-          const updatedTestData = [...prevTestData, ...newDataArray];
-          // return updatedTestData;
-          return data;
-        });
-      }
-      
-      socket.on('1', handleSocketData);
-      socket.on('2', handleSocketData);
-      socket.on('3', handleSocketData);
+
+      const filterData = filtered();
+      setFilteredData(filterData);
+     
 
       return () => {
-        const filterData = filtered();
-        setFilteredData(filterData);
+
       };
     }, [filteredData,eventId, marketId, eventCategory]);
 
