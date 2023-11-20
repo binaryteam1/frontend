@@ -40,12 +40,12 @@
       socket.on('3', handleSocketData);
 
       return () => {
-
+        const filterData = filtered();
+        setFilteredData(filterData);
       };
     }, [filteredData,eventId, marketId, eventCategory]);
 
-      const filterData = filtered();
-      setFilteredData(filterData);
+
 
 
     return (
