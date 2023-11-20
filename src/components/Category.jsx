@@ -13,7 +13,7 @@ function Category() {
   const eventId = queryData["eventId"];
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
-  
+
   const filtered = (data) => {
     return data.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
@@ -27,18 +27,18 @@ function Category() {
   };
 
   const handleSocketData = (data) => {
-    setTestData(prevTestData => {
+    setTestData((prevTestData) => {
       const newDataArray = Array.isArray(data) ? data : [data];
       const updatedTestData = [...prevTestData, ...newDataArray];
       return updatedTestData;
     });
 
-    setFilteredData(prevFilteredData => {
-      const filter = eventId && marketId && eventCategory ? filtered(updatedTestData) : updatedTestData;
+    setFilteredData((prevFilteredData) => {
+      const filter = eventId && marketId && eventCategory ? filtered(prevTestData) : prevTestData;
       return filter;
     });
-  }
-  
+  };
+
   useEffect(() => {
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
