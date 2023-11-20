@@ -32,7 +32,7 @@ function Category() {
 
         if (updatedTestData.length > 0) {
           // Update state only if new data satisfies filters
-          return [...prevTestData, ...updatedTestData];
+          return [updatedTestData];
         } else {
           // No new data that satisfies filters, retain the previous state
           return prevTestData;
