@@ -54,17 +54,17 @@ export default function App() {
 
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
-      socket.on("cricket-receive-data", (data) => {
+      socket.on("3", (data) => {
         // Handle the received data
         setCricketRealtimedata(JSON.stringify(data))
         // Update UI or perform other actions based on the data
       });
-      socket.on("soccer-receive-data", (data) => {
+      socket.on("1", (data) => {
         // Handle the received data
         setSoccerRealtimedata(JSON.stringify(data))
         // Update UI or perform other actions based on the data
       });
-      socket.on("tennis-receive-data", (data) => {
+      socket.on("2", (data) => {
         // Handle the received data
         setTennisRealtimedata(JSON.stringify(data))
         // Update UI or perform other actions based on the data
