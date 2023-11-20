@@ -31,7 +31,8 @@ function Category() {
     const handleSocketData = (data) => {
       setTestData((prevTestData) => {
         const newDataArray = Array.isArray(data) ? data : [data];
-        return [...prevTestData, ...newDataArray];
+        // return [...prevTestData, ...newDataArray];
+        return data
       });
     };
 
