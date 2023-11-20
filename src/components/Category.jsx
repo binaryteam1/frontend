@@ -14,7 +14,33 @@ function Category() {
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
 
+  useEffect(() => {
+    const handleSocketData = (data) => {
+      setTestData((prevTestData) => {
+        const newDataArray = Array.isArray(data) ? data : [data];
+        const updatedTestData = [...prevTestData, ...newDataArray];
+        // return updatedTestData;
+        return data;
+      });
+    }
+
+    socket.on('1', handleSocketData);
+    socket.on('2', handleSocketData);
+    socket.on('3', handleSocketData);
+
+    return () => {
+      // Cleanup socket listeners when component unmounts
+    
+    };
+  }, []);
+
+  useEffect(() => {
+    setFilteredData(filtered());
+  }, [testData, eventId, marketId, eventCategory]);
+
   const filtered = () => {
+    if (testData.length === 0) return [];
+
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
@@ -25,34 +51,6 @@ function Category() {
       );
     });
   };
-
-  useEffect(() => {
-    const handleSocketData = (data) => {
-      setTestData((prevTestData) => {
-        const newDataArray = Array.isArray(data) ? data : [data];
-        const updatedTestData = [...prevTestData, ...newDataArray];
-        // return updatedTestData;
-        return data;
-      });
-    }
-    const filterData = filtered();
-    setFilteredData(filterData);
-    if (eventCategory) {
-      socket.on(eventCategory.toString, handleSocketData);
-    }
-    else {
-      socket.on('1', handleSocketData);
-      socket.on('2', handleSocketData);
-      socket.on('3', handleSocketData);
-    }
-    
-
-
-    return () => {
-     
-    };
-  }, [filteredData,eventId, marketId, eventCategory]); // Include relevant dependencies here
-
 
   return (
     <div>
