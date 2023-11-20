@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { socket } from "../socket";
-import { addSocketData } from "../redux/reducers/dataslice"; // Import the Redux action
+import { addSocketData } from "../dataSlice"; // Import the Redux action
 
 function Category() {
   const location = useLocation();

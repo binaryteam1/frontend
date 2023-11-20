@@ -74,6 +74,7 @@ export default function App() {
   }, []);
 
   return (
+    
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Homepage cricketrealtimedata={cricketrealtimedata} soccerrealtimedata={soccerrealtimedata} tennisrealtimedata={tennisrealtimedata} />} />
