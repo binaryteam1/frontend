@@ -19,7 +19,8 @@ function Category() {
       setTestData((prevTestData) => {
         const newDataArray = Array.isArray(data) ? data : [data];
         const updatedTestData = [...prevTestData, ...newDataArray];
-        return updatedTestData;
+        // return updatedTestData;
+        return data;
       });
     }
     
