@@ -33,7 +33,7 @@ function Category() {
 
   useEffect(() => {
     const handleSocketData = (data) => {
-      // Dispatch the action to update the Redux store
+    
       dispatch(addSocketData(Array.isArray(data) ? data : [data]));
     };
 
