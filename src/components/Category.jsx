@@ -19,8 +19,7 @@ function Category() {
       setTestData((prevTestData) => {
         const newDataArray = Array.isArray(data) ? data : [data];
         const updatedTestData = [...prevTestData, ...newDataArray];
-        // return updatedTestData;
-        return data;
+        return updatedTestData;
       });
     }
     
@@ -29,13 +28,18 @@ function Category() {
     socket.on('3', handleSocketData);
 
     return () => {
-      // No cleanup function here to keep socket listeners active
+      // Cleanup socket listeners when component unmounts
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
   }, [eventId, marketId, eventCategory]);
 
+  // Use the filtered function directly inside the useEffect
   useEffect(() => {
-    setFilteredData(filtered());
-  }, [filteredData, eventId, marketId, eventCategory]);
+    const filteredData = filtered();
+    setFilteredData(filteredData);
+  }, [testData, eventId, marketId, eventCategory]);
 
   const filtered = () => {
     return testData.filter((event) => {
