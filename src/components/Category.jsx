@@ -72,7 +72,7 @@ function Category() {
 
     setFilteredData(filtered());
 
-  }, [filteredData]);
+  }, [testData]);
 
   return (
     <div>
