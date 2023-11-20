@@ -46,7 +46,7 @@ function Category() {
       socket.off('2', handleSocketData);
       socket.off('3', handleSocketData);
     };
-  }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
+  }, [filteredData,eventId, marketId, eventCategory]); // Include relevant dependencies here
 
   return (
     <div>
