@@ -27,6 +27,7 @@ function Category() {
 
   const handleSocketData = (data) => {
     const filter = eventId && marketId && eventCategory ? filtered(data) : data;
+    setFilteredData(filter)
 
   }
   
@@ -34,13 +35,7 @@ function Category() {
   socket.on('2', handleSocketData);
   socket.on('3', handleSocketData);
   useEffect(() => {
-
-
     return () => {
-      // Cleanup socket listeners when component unmounts
-      socket.off('1', handleSocketData);
-      socket.off('2', handleSocketData);
-      socket.off('3', handleSocketData);
     };
   }, [testData,eventId, marketId, eventCategory]);
 
