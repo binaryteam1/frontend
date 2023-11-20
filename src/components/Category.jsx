@@ -49,12 +49,8 @@ function Category() {
     return () => {
       // Cleanup socket listeners when component unmounts
       if (eventCategory) {
-        socket.off(eventCategory.toString(), handleSocketData);
-      } else {
-        socket.off('1', handleSocketData);
-        socket.off('2', handleSocketData);
-        socket.off('3', handleSocketData);
-      }
+        socket.off(!eventCategory.toString(), handleSocketData);
+      } 
     };
   }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
 
