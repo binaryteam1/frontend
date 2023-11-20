@@ -13,6 +13,7 @@ function Category() {
   const eventId = queryData["eventId"];
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
+
   const filtered = () => {
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
@@ -45,11 +46,13 @@ function Category() {
       socket.off('2', handleSocketData);
       socket.off('3', handleSocketData);
     };
-  }, [filteredData,eventId, marketId, eventCategory]);
+  }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
 
+  // Update filteredData when testData changes
+  useEffect(() => {
     const filterData = filtered();
     setFilteredData(filterData);
-
+  }, [testData, eventId, marketId, eventCategory]);
 
   return (
     <div>
