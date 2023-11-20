@@ -29,9 +29,7 @@ function Category() {
 
     return () => {
       // Cleanup socket listeners when component unmounts
-      socket.off('1', handleSocketData);
-      socket.off('2', handleSocketData);
-      socket.off('3', handleSocketData);
+    
     };
   }, []);
 
