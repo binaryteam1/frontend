@@ -52,8 +52,8 @@ export default function App() {
     return () => {
       clearInterval(timerId);
 
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
+    
+      
       socket.on("3", (data) => {
         // Handle the received data
         setCricketRealtimedata(JSON.stringify(data))
