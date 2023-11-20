@@ -36,10 +36,11 @@ function Category() {
     };
   }, [eventId, marketId, eventCategory]);
 
+
   // Use the filtered function directly inside the useEffect
   useEffect(() => {
-    const filteredData = filtered();
-    setFilteredData(filteredData);
+    const filterData = filtered();
+    setFilteredData(filterData);
   }, [filteredData, eventId, marketId, eventCategory]);
 
   const filtered = () => {
