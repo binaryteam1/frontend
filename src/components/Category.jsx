@@ -43,7 +43,7 @@ function Category() {
 
   useEffect(() => {
     if (eventId) {
-      socket.on(eventCategory.toString(),'handleSocketData')
+      socket.on(eventId.toString(),'handleSocketData')
     }
 
     else {
@@ -55,7 +55,7 @@ function Category() {
 
     return () => {
       if (eventId) {
-        socket.off(eventCategory.toString(),'handleSocketData')
+        socket.off(eventId.toString(),'handleSocketData')
       }
   
       else {
