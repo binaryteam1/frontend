@@ -28,6 +28,10 @@ function Category() {
    
 
     }
+    else if (eventCategory == 4) {
+      eventCategory = 3;
+      socket.on(eventCategory,handleSocketData)
+    }
     else {
       socket.on('1',handleSocketData)
       socket.on('2', handleSocketData);
