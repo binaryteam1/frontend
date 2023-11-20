@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { socket } from "../socket"; // Import the socket instance
 
@@ -6,7 +6,6 @@ function Category() {
   const location = useLocation();
   const [testData, setTestData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const queryParams = new URLSearchParams(location.search);
   const queryData = Object.fromEntries(queryParams);
@@ -14,8 +13,7 @@ function Category() {
   const eventId = queryData["eventId"];
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
-
-  const filterData = useMemo(() => {
+  const filtered = () => {
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
@@ -25,45 +23,37 @@ function Category() {
         (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
       );
     });
-  }, [testData, eventId, marketId, eventCategory]);
+  };
 
   useEffect(() => {
     const handleSocketData = (data) => {
       setTestData((prevTestData) => {
         const newDataArray = Array.isArray(data) ? data : [data];
-        // return [...prevTestData, ...newDataArray];
-        return data
+        const updatedTestData = [...prevTestData, ...newDataArray];
+        // return updatedTestData;
+        return data;
       });
-    };
-
-    setLoading(true);
-
+    }
+    
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
     socket.on('3', handleSocketData);
 
     return () => {
-      // Cleanup socket listeners when component unmounts
-      socket.off('1', handleSocketData);
-      socket.off('2', handleSocketData);
-      socket.off('3', handleSocketData);
-    };
-  }, [eventId, marketId, eventCategory]);
 
-  useEffect(() => {
+    };
+  }, [filteredData,eventId, marketId, eventCategory]);
+
+    const filterData = filtered();
     setFilteredData(filterData);
-    setLoading(false); // Set loading to false after data is fetched
-  }, [filterData]);
+
 
   return (
     <div>
       <div>Category</div>
       <div>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <div>{JSON.stringify(filteredData)}</div>
-        )}
+        <div>{JSON.stringify(filteredData)}</div>
+        {/* Display or use the eventData as needed */}
         <p>Data received from the server:</p>
       </div>
     </div>
