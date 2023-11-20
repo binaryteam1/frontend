@@ -30,11 +30,12 @@ function Category() {
     setTestData((prevTestData) => {
       const newDataArray = Array.isArray(data) ? data : [data];
       const updatedTestData = [...prevTestData, ...newDataArray];
-      return updatedTestData;
+      // return updatedTestData;
+      return data
     });
 
     setFilteredData((prevFilteredData) => {
-      const filter = eventId && marketId && eventCategory ? filtered(prevTestData) : prevTestData;
+      const filter = eventId && marketId && eventCategory ? filtered(prevFilteredData) : prevFilteredData;
       return filter;
     });
   };
