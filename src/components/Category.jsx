@@ -23,13 +23,20 @@ function Category() {
         return data;
       });
     }
+    if (eventCategory) {
+      socket.on(eventCategory, handleSocketData);
+   
 
-    socket.on('1', handleSocketData);
-    socket.on('2', handleSocketData);
-    socket.on('3', handleSocketData);
+    }
+    else {
+      socket.on('1',handleSocketData)
+      socket.on('2', handleSocketData);
+      socket.on('3', handleSocketData);
+    }
 
+    
     return () => {
-
+      socket.off(!eventCategory, handleSocketData);
     };
   }, []);
 
