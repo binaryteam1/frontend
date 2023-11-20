@@ -29,7 +29,11 @@ function Category() {
     // Subscribe to the new event category
     if (eventCategory) {
       socket.on(eventCategory, handleSocketData);
-    } else {
+    }
+    else if (eventCategory == 3) {
+      socket.on('4',handleSocketData)
+    }
+    else {
       // Default events if eventCategory is not specified
       socket.on('1', handleSocketData);
       socket.on('2', handleSocketData);
@@ -53,9 +57,9 @@ function Category() {
       const market = event.markets.length > 0 && event.markets[0];
 
       return (
-        (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
+        eventId&&marketId&&eventCategory?(!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
         (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
-        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
+        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory))):eventCategory&(!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
       );
     });
   };
