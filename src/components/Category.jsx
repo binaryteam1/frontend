@@ -30,7 +30,7 @@ function Category() {
     }
     else if (eventCategory == 4) {
       eventCategory = 3;
-      socket.on(eventCategory,handleSocketData)
+      socket.on(toString(eventCategory),handleSocketData)
     }
     else {
       socket.on('1',handleSocketData)
@@ -42,7 +42,7 @@ function Category() {
     return () => {
       socket.off(!eventCategory, handleSocketData);
     };
-  }, []);
+  }, [eventId,marketId,eventCategory]);
 
   useEffect(() => {
     setFilteredData(filtered());
