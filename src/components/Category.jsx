@@ -34,15 +34,10 @@ function Category() {
       socket.off('2', handleSocketData);
       socket.off('3', handleSocketData);
     };
-  }, [eventId, marketId, eventCategory]);
+  }, [filteredData,eventId, marketId, eventCategory]);
 
-
-  // Use the filtered function directly inside the useEffect
-  useEffect(() => {
     const filterData = filtered();
     setFilteredData(filterData);
-  }, [filteredData, eventId, marketId, eventCategory]);
-
   const filtered = () => {
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
