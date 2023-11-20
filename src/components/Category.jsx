@@ -23,7 +23,7 @@ function Category() {
         return data;
       });
     }
-
+    
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
     socket.on('3', handleSocketData);
@@ -35,11 +35,9 @@ function Category() {
 
   useEffect(() => {
     setFilteredData(filtered());
-  }, [testData, eventId, marketId, eventCategory]);
+  }, [filteredData, eventId, marketId, eventCategory]);
 
   const filtered = () => {
-    if (testData.length === 0) return [];
-
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
