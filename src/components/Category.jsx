@@ -13,8 +13,9 @@ function Category() {
   const eventId = queryData["eventId"];
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
-  const filtered = (testData) => {
-    return testData.filter((event) => {
+  
+  const filtered = (data) => {
+    return data.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
       return (
@@ -26,21 +27,30 @@ function Category() {
   };
 
   const handleSocketData = (data) => {
-    const filter = eventId && marketId && eventCategory ? filtered(data) : data;
-    setFilteredData(filter)
+    setTestData(prevTestData => {
+      const newDataArray = Array.isArray(data) ? data : [data];
+      const updatedTestData = [...prevTestData, ...newDataArray];
+      return updatedTestData;
+    });
 
+    setFilteredData(prevFilteredData => {
+      const filter = eventId && marketId && eventCategory ? filtered(updatedTestData) : updatedTestData;
+      return filter;
+    });
   }
   
-  socket.on('1', handleSocketData);
-  socket.on('2', handleSocketData);
-  socket.on('3', handleSocketData);
   useEffect(() => {
+    socket.on('1', handleSocketData);
+    socket.on('2', handleSocketData);
+    socket.on('3', handleSocketData);
+
     return () => {
+      // Cleanup socket listeners when component unmounts
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
-  }, [testData,eventId, marketId, eventCategory]);
-
-
-
+  }, [eventId, marketId, eventCategory]);
 
   return (
     <div>
