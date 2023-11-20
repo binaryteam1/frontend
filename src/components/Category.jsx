@@ -38,7 +38,7 @@ function Category() {
     return () => {
 
     };
-  }, []);
+  }, [eventId, marketId, eventCategory]);
 
   useEffect(() => {
     setFilteredData(filtered());
