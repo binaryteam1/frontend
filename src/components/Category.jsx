@@ -39,13 +39,13 @@ function Category() {
           ? prevTestData
           : [...prevTestData, ...newDataArray]; // Using spread operator to flatten the array
 
-        setFilteredData(updatedTestData);
+        setFilteredData(data);
 
-        return updatedTestData;
+        return data;
+        // return updatedTestData;
       });
     }
 
-    // Add event listeners for '1' to '3'
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
     socket.on('3', handleSocketData);
