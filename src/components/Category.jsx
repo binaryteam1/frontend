@@ -39,11 +39,12 @@ function Category() {
       return filter;
     });
   };
+  socket.on('1', handleSocketData);
+  socket.on('2', handleSocketData);
+  socket.on('3', handleSocketData);
 
   useEffect(() => {
-    socket.on('1', handleSocketData);
-    socket.on('2', handleSocketData);
-    socket.on('3', handleSocketData);
+
 
     return () => {
       // Cleanup socket listeners when component unmounts
@@ -51,7 +52,7 @@ function Category() {
       socket.off('2', handleSocketData);
       socket.off('3', handleSocketData);
     };
-  }, [eventId, marketId, eventCategory]);
+  }, [filteredData,eventId, marketId, eventCategory]);
 
   return (
     <div>
