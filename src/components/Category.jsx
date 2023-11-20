@@ -51,9 +51,6 @@ function Category() {
     socket.on('3', handleSocketData);
 
     return () => {
-      socket.off('1', handleSocketData);
-      socket.off('2', handleSocketData);
-      socket.off('3', handleSocketData);
     };
   }, [eventId, marketId]);
 
@@ -75,7 +72,7 @@ function Category() {
 
     setFilteredData(filtered());
 
-  }, [testData ,eventId, marketId, eventCategory]);
+  }, [filteredData,eventId, marketId, eventCategory]);
 
   return (
     <div>
