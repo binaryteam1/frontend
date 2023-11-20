@@ -72,7 +72,7 @@ function Category() {
 
     setFilteredData(filtered());
 
-  }, [filteredData,eventId, marketId, eventCategory]);
+  }, [filteredData]);
 
   return (
     <div>
