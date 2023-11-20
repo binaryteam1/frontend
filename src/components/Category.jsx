@@ -29,11 +29,7 @@ function Category() {
     // Subscribe to the new event category
     if (eventCategory) {
       socket.on(eventCategory, handleSocketData);
-    }
-    else if (eventCategory == 3) {
-      socket.on('4',handleSocketData)
-    }
-    else {
+    } else {
       // Default events if eventCategory is not specified
       socket.on('1', handleSocketData);
       socket.on('2', handleSocketData);
@@ -41,7 +37,8 @@ function Category() {
     }
 
     return () => {
-
+      // Clean up the socket listener when the component unmounts
+      socket.off(eventCategory, handleSocketData);
     };
   }, [eventCategory]);
 
@@ -53,12 +50,12 @@ function Category() {
     if (testData.length === 0) return [];
 
     return testData.filter((event) => {
-      const market =event&&event.markets.length > 0 && event.markets[0];
+      const market = event.markets.length > 0 && event.markets[0];
 
       return (
         eventId&&marketId&&eventCategory?(!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
         (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
-        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory))):eventCategory&(!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
+        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory))):eventCategory&&(!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
       );
     });
   };
