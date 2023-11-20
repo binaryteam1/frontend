@@ -17,28 +17,23 @@ function Category() {
   useEffect(() => {
     const handleSocketData = (data) => {
       setTestData((prevTestData) => {
-        // const newDataArray = Array.isArray(data) ? data : [data];
-        // const updatedTestData = [...prevTestData, ...newDataArray];
-        // return updatedTestData;
-        return data;
+        const newDataArray = Array.isArray(data) ? data : [data];
+        const updatedTestData = [...prevTestData, ...newDataArray];
+        return updatedTestData;
       });
     }
-    if (eventCategory) {
-      socket.on(toString(eventCategory), handleSocketData);
-   
 
-    }
-    else {
-      socket.on('1',handleSocketData)
-      socket.on('2', handleSocketData);
-      socket.on('3', handleSocketData);
-    }
+    socket.on('1', handleSocketData);
+    socket.on('2', handleSocketData);
+    socket.on('3', handleSocketData);
 
-    
     return () => {
-
+      // Cleanup socket listeners when component unmounts
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
-  }, [eventId, marketId, eventCategory]);
+  }, []);
 
   useEffect(() => {
     setFilteredData(filtered());
