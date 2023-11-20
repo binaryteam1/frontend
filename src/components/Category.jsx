@@ -4,7 +4,7 @@ import { socket } from "../socket"; // Import the socket instance
 
 function Category() {
   const location = useLocation();
-  const [testData, setTestData] = useState([]);
+  const [testData, setTestData] = useState([]); // Ensure it's not initialized as an empty array
   const [filteredData, setFilteredData] = useState([]);
 
   const queryParams = new URLSearchParams(location.search);
@@ -17,10 +17,26 @@ function Category() {
   useEffect(() => {
     const handleSocketData = (data) => {
       setTestData((prevTestData) => {
-        // const newDataArray = Array.isArray(data) ? data : [data];
-        // const updatedTestData = [...prevTestData, ...newDataArray];
-        // return updatedTestData;
-        return data;
+        const newDataArray = Array.isArray(data) ? data : [data];
+
+        // Check if new data satisfies the filters
+        const updatedTestData = newDataArray.filter((newData) => {
+          const market = newData.markets.length > 0 && newData.markets[0];
+
+          return (
+            (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
+            (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
+            (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
+          );
+        });
+
+        if (updatedTestData.length > 0) {
+          // Update state only if new data satisfies filters
+          return [...prevTestData, ...updatedTestData];
+        } else {
+          // No new data that satisfies filters, retain the previous state
+          return prevTestData;
+        }
       });
     }
 
@@ -30,9 +46,11 @@ function Category() {
 
     return () => {
       // Cleanup socket listeners when component unmounts
-    
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
-  }, []);
+  }, [eventId, marketId, eventCategory]);
 
   useEffect(() => {
     setFilteredData(filtered());
