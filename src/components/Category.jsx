@@ -53,7 +53,7 @@ function Category() {
       return (
        marketId&&eventId&&eventCategory?(!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
         (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
-        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory))):eventCategory&(!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
+        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory))):eventCategory&&(!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
       );
     });
   };
