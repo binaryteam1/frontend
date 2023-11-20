@@ -24,7 +24,7 @@ function Category() {
       });
     }
     if (eventCategory) {
-      socket.on(eventCategory, handleSocketData);
+      socket.on(toString(eventCategory), handleSocketData);
    
 
     }
