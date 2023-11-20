@@ -39,18 +39,30 @@ function Category() {
       return filter;
     });
   };
-  socket.on('1', handleSocketData);
-  socket.on('2', handleSocketData);
-  socket.on('3', handleSocketData);
+
 
   useEffect(() => {
+    if (eventId) {
+      socket.on(eventCategory.toString(),'handleSocketData')
+    }
+
+    else {
+      socket.on('1', handleSocketData);
+      socket.on('2', handleSocketData);
+      socket.on('3', handleSocketData);
+  }
 
 
     return () => {
-      // Cleanup socket listeners when component unmounts
-      socket.off('1', handleSocketData);
-      socket.off('2', handleSocketData);
-      socket.off('3', handleSocketData);
+      if (eventId) {
+        socket.off(eventCategory.toString(),'handleSocketData')
+      }
+  
+      else {
+        socket.off('1', handleSocketData);
+        socket.off('2', handleSocketData);
+        socket.off('3', handleSocketData);
+    }
     };
   }, [filteredData,eventId, marketId, eventCategory]);
 
