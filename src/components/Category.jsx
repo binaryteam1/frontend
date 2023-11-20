@@ -35,6 +35,8 @@ function Category() {
         return data;
       });
     }
+    const filterData = filtered();
+    setFilteredData(filterData);
     if (eventCategory) {
       socket.on(eventCategory.toString, handleSocketData);
     }
@@ -47,15 +49,10 @@ function Category() {
 
 
     return () => {
-      socket.off(!eventCategory.toString(),handleSocketData)
+     
     };
-  }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
+  }, [filteredData,eventId, marketId, eventCategory]); // Include relevant dependencies here
 
-  // Update filteredData when testData changes
-  useEffect(() => {
-    const filterData = filtered();
-    setFilteredData(filterData);
-  }, [testData, eventId, marketId, eventCategory]);
 
   return (
     <div>
