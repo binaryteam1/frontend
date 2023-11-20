@@ -8,7 +8,7 @@ export const dataSlice = createSlice({
   },
   reducers: {
     addSocketData: (state, action) => {
-      state.testData = [...state.testData, ...action.payload];
+      state.testData = [action.payload];
     },
   },
 });
