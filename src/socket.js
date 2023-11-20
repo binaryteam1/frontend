@@ -4,8 +4,6 @@ import { io } from "socket.io-client";
 const URL =
   process.env.NODE_ENV === "production"
     ? "https://scraper-backend-yg6r.onrender.com"
-    : "https://scraper-backend-yg6r.onrender.com
-    
-    ";
+    : "https://scraper-backend-yg6r.onrender.com";
 
 export const socket = io(URL);
