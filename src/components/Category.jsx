@@ -49,13 +49,6 @@ function Category() {
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
     socket.on('3', handleSocketData);
-
-    return () => {
-    };
-  }, [eventId, marketId]);
-
-  // Filter the data based on query parameters
-  useEffect(() => {
     const filtered = () => {
       if (testData.length === 0) return [];
 
@@ -71,8 +64,9 @@ function Category() {
     };
 
     setFilteredData(filtered());
-
-  }, [testData]);
+    return () => {
+    };
+  }, [eventId, marketId,testData]);
 
   return (
     <div>
