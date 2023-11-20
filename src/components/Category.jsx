@@ -28,9 +28,9 @@ function Category() {
     socket.on('3', handleSocketData);
 
     return () => {
-
+      // No cleanup function here to keep socket listeners active
     };
-  }, []);
+  }, [eventId, marketId, eventCategory]);
 
   useEffect(() => {
     setFilteredData(filtered());
