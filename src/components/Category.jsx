@@ -1,16 +1,12 @@
-// Category.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { socket } from "../socket";
-import { addSocketData } from "../redux/reducers/dataslice"; // Import the Redux action
+import { socket } from "../socket"; // Import the socket instance
 
 function Category() {
   const location = useLocation();
-  const dispatch = useDispatch();
-  const testData = useSelector((state) => state.data.testData);
-
+  const [testData, setTestData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const queryParams = new URLSearchParams(location.search);
   const queryData = Object.fromEntries(queryParams);
@@ -19,7 +15,7 @@ function Category() {
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
 
-  const filtered = () => {
+  const filterData = useMemo(() => {
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
@@ -29,38 +25,44 @@ function Category() {
         (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
       );
     });
-  };
+  }, [testData, eventId, marketId, eventCategory]);
 
   useEffect(() => {
     const handleSocketData = (data) => {
-    
-      dispatch(addSocketData(Array.isArray(data) ? data : [data]));
+      setTestData((prevTestData) => {
+        const newDataArray = Array.isArray(data) ? data : [data];
+        return [...prevTestData, ...newDataArray];
+      });
     };
 
-    if (eventCategory) {
-      socket.on(eventCategory.toString(), handleSocketData);
-    } else {
-      socket.on('1', handleSocketData);
-      socket.on('2', handleSocketData);
-      socket.on('3', handleSocketData);
-    }
+    setLoading(true);
+
+    socket.on('1', handleSocketData);
+    socket.on('2', handleSocketData);
+    socket.on('3', handleSocketData);
 
     return () => {
-
+      // Cleanup socket listeners when component unmounts
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
-  }, [eventId, marketId, eventCategory, dispatch]);
+  }, [eventId, marketId, eventCategory]);
 
   useEffect(() => {
-    const filterData = filtered();
     setFilteredData(filterData);
-  }, [testData, eventId, marketId, eventCategory]);
+    setLoading(false); // Set loading to false after data is fetched
+  }, [filterData]);
 
   return (
     <div>
       <div>Category</div>
       <div>
-        <div>{JSON.stringify(filteredData)}</div>
-        {/* Display or use the eventData as needed */}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div>{JSON.stringify(filteredData)}</div>
+        )}
         <p>Data received from the server:</p>
       </div>
     </div>
