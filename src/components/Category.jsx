@@ -32,10 +32,12 @@ function Category() {
         const newDataArray = Array.isArray(data) ? data : [data];
         const updatedTestData = [...prevTestData, ...newDataArray];
        // Update filteredData immediately
-        return data;
+       await setFilteredData(filtered()); 
+       return data;
+       
       })
 
-      setFilteredData(filtered()); 
+    
     }
 
     socket.on('1', handleSocketData);
