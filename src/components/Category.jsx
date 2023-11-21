@@ -26,7 +26,7 @@ function Category() {
     return () => {
  
     };
-  }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
+  }, []); // Include relevant dependencies here
 
 
   return (
