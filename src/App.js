@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Game from './components/Game';
 import Category from './components/Category';
+import Single from './components/Single';
 
 export default function App() {
   const [username, setUsername] = useState('');
@@ -80,7 +81,7 @@ export default function App() {
         <Route path='/' element={<Homepage cricketrealtimedata={cricketrealtimedata} soccerrealtimedata={soccerrealtimedata} tennisrealtimedata={tennisrealtimedata} />} />
         {/* <Route path='/page' element={<Game />} /> */}
         <Route path='/category' element={<Category />} />
-        <Route path='/single' element={Single}/>
+        <Route path='/single' element={<Single/>}/>
         
     </Routes>
     </BrowserRouter>
