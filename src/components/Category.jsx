@@ -5,26 +5,7 @@ import { socket } from "../socket"; // Import the socket instance
 function Category() {
   const location = useLocation();
   const [testData, setTestData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-
-  const queryParams = new URLSearchParams(location.search);
-  const queryData = Object.fromEntries(queryParams);
-
-  const eventId = queryData["eventId"];
-  const marketId = queryData["marketId"];
-  const eventCategory = queryData['eventType'];
-
-  const filtered = useMemo(() => {
-    return testData.filter((event) => {
-      const market = event.markets.length > 0 && event.markets[0];
-
-      return (
-        (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
-        (!marketId || (market && parseFloat(market.marketId) === parseFloat(marketId))) &&
-        (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
-      );
-    });
-  }, [testData, eventId, marketId, eventCategory]);
+ 
   const handleSocketData = (data) => {
     setTestData((prevTestData) => {
       const newDataArray = Array.isArray(data) ? data : [data];
@@ -47,17 +28,12 @@ function Category() {
     };
   }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
 
-  // Update filteredData when testData changes
-  useEffect(() => {
-    setFilteredData(filtered);
-    console.log('rendering')
-  }, [filtered]);
 
   return (
     <div>
       <div>Category</div>
       <div>
-        <div>{JSON.stringify(filteredData)}</div>
+        <div>{JSON.stringify(testData)}</div>
         {/* Display or use the eventData as needed */}
         <p>Data received from the server:</p>
       </div>
