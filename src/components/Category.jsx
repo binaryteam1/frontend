@@ -25,10 +25,18 @@ function Category() {
       );
     });
   }, [testData, eventId, marketId, eventCategory]);
+  const handleSocketData = (data) => {
+    setTestData((prevTestData) => {
+      const newDataArray = Array.isArray(data) ? data : [data];
+      const updatedTestData = [...prevTestData, ...newDataArray];
+      // return updatedTestData;
+      return data;
+    });
+  }
+
   socket.on('1', handleSocketData);
   socket.on('2', handleSocketData);
   socket.on('3', handleSocketData);
-
 
   useEffect(() => {
 
@@ -44,7 +52,9 @@ function Category() {
     setFilteredData(filtered);
     console.log('rendering')
   }, [filtered]);
-
+  socket.on('1', handleSocketData);
+  socket.on('2', handleSocketData);
+  socket.on('3', handleSocketData);
   return (
     <div>
       <div>Category</div>
