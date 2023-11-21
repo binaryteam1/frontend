@@ -52,9 +52,7 @@ function Category() {
     setFilteredData(filtered);
     console.log('rendering')
   }, [filtered]);
-  socket.on('1', handleSocketData);
-  socket.on('2', handleSocketData);
-  socket.on('3', handleSocketData);
+
   return (
     <div>
       <div>Category</div>
