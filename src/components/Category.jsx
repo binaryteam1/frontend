@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { socket } from "../socket"; // Import the socket instance
 
@@ -14,7 +14,7 @@ function Category() {
   const marketId = queryData["marketId"];
   const eventCategory = queryData['eventType'];
 
-  const filtered = () => {
+  const filtered = useMemo(() => {
     return testData.filter((event) => {
       const market = event.markets.length > 0 && event.markets[0];
 
@@ -24,7 +24,7 @@ function Category() {
         (!eventCategory || (market && parseFloat(market.eventType) === parseFloat(eventCategory)))
       );
     });
-  };
+  }, [testData, eventId, marketId, eventCategory]);
 
   useEffect(() => {
     const handleSocketData = (data) => {
@@ -35,7 +35,7 @@ function Category() {
         return data;
       });
     }
-    
+
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
     socket.on('3', handleSocketData);
@@ -50,9 +50,8 @@ function Category() {
 
   // Update filteredData when testData changes
   useEffect(() => {
-    const filterData = filtered();
-    setFilteredData(filterData);
-  }, [testData, eventId, marketId, eventCategory]);
+    setFilteredData(filtered);
+  }, [filtered]);
 
   return (
     <div>
