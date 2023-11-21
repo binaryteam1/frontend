@@ -16,7 +16,7 @@ function Category() {
 
   const filtered = () => {
     return testData.filter((event) => {
-      const market = event.markets.length > 0 && event.markets[0];
+      const market = event.markets && event.markets.length > 0 && event.markets[0];
 
       return (
         (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
