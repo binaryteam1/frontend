@@ -32,7 +32,7 @@ function Category() {
         const newDataArray = Array.isArray(data) ? data : [data];
         const updatedTestData = [...prevTestData, ...newDataArray];
         setFilteredData(filtered()); // Update filteredData immediately
-        return updatedTestData;
+        return data;
       });
     }
 
