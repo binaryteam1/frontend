@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { socket } from "../socket"; // Import the socket instance
 
 function Category() {
   const location = useLocation();
   const [testData, setTestData] = useState([]);
-  const [filteredData, setFilteredData] = useState([{}]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const queryParams = new URLSearchParams(location.search);
   const queryData = Object.fromEntries(queryParams);
@@ -16,7 +16,7 @@ function Category() {
 
   const filtered = () => {
     return testData.filter((event) => {
-      const market = event.markets && event.markets.length > 0 && event.markets[0];
+      const market = event.markets.length > 0 && event.markets[0];
 
       return (
         (!eventId || (market && parseFloat(market.eventId) === parseFloat(eventId))) &&
@@ -26,26 +26,33 @@ function Category() {
     });
   };
 
-  const memoizedFilteredData = useMemo(() => {
-    return filtered();
-  }, [testData, eventId, marketId, eventCategory]);
-
   useEffect(() => {
     const handleSocketData = (data) => {
       setTestData((prevTestData) => {
-        setFilteredData(memoizedFilteredData);
-        return [...prevTestData, data];
+        const newDataArray = Array.isArray(data) ? data : [data];
+        const updatedTestData = [...prevTestData, ...newDataArray];
+        // return updatedTestData;
+        return data;
       });
-    };
-
+    }
+    
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
     socket.on('3', handleSocketData);
 
     return () => {
-
+      // Cleanup socket listeners when component unmounts
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
-  }, [memoizedFilteredData, eventId, marketId, eventCategory]);
+  }, [eventId, marketId, eventCategory]); // Include relevant dependencies here
+
+  // Update filteredData when testData changes
+  useEffect(() => {
+    const filterData = filtered();
+    setFilteredData(filterData);
+  }, [testData, eventId, marketId, eventCategory]);
 
   return (
     <div>
