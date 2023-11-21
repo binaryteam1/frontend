@@ -27,13 +27,15 @@ function Category() {
   };
 
   useEffect(() => {
-    const handleSocketData = (data) => {
-      setTestData((prevTestData) => {
+    const handleSocketData = async (data) => {
+     await  setTestData((prevTestData) => {
         const newDataArray = Array.isArray(data) ? data : [data];
         const updatedTestData = [...prevTestData, ...newDataArray];
        // Update filteredData immediately
         return data;
-      });
+      })
+
+      setFilteredData(filtered()); 
     }
 
     socket.on('1', handleSocketData);
@@ -44,7 +46,7 @@ function Category() {
 
     };
   }, [filteredData,eventId, marketId, eventCategory]); // Include relevant dependencies here
-  setFilteredData(filtered()); 
+  
   return (
     <div>
       <div>Category</div>
