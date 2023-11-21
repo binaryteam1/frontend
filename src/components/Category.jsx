@@ -5,7 +5,7 @@ import { socket } from "../socket"; // Import the socket instance
 function Category() {
   const location = useLocation();
   const [testData, setTestData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState([{}]);
 
   const queryParams = new URLSearchParams(location.search);
   const queryData = Object.fromEntries(queryParams);
@@ -31,7 +31,7 @@ function Category() {
       setTestData((prevTestData) => {
         const newDataArray = Array.isArray(data) ? data : [data];
         const updatedTestData = [...prevTestData, ...newDataArray];
-        setFilteredData(filtered()); // Update filteredData immediately
+       // Update filteredData immediately
         return data;
       });
     }
@@ -44,7 +44,7 @@ function Category() {
 
     };
   }, [filteredData,eventId, marketId, eventCategory]); // Include relevant dependencies here
-
+  setFilteredData(filtered()); 
   return (
     <div>
       <div>Category</div>
