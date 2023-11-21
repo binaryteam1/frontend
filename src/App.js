@@ -80,6 +80,7 @@ export default function App() {
         <Route path='/' element={<Homepage cricketrealtimedata={cricketrealtimedata} soccerrealtimedata={soccerrealtimedata} tennisrealtimedata={tennisrealtimedata} />} />
         {/* <Route path='/page' element={<Game />} /> */}
         <Route path='/category' element={<Category />} />
+        <Route path='/single' element={Single}/>
         
     </Routes>
     </BrowserRouter>

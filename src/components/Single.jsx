@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { socket } from "../socket"; // Import the socket instance
 
-function Category() {
+function Single() {
   const location = useLocation();
   const [testData, setTestData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -50,4 +50,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default Single;
