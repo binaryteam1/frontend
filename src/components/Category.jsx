@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { socket } from "../socket"; // Import the socket instance
 
@@ -26,24 +26,30 @@ function Category() {
     });
   };
 
+  const memoizedFilteredData = useMemo(() => {
+    return filtered();
+  }, [testData, eventId, marketId, eventCategory]);
+
   useEffect(() => {
     const handleSocketData = (data) => {
       setTestData((prevTestData) => {
-        setFilteredData(filtered());
-        return data
+        setFilteredData(memoizedFilteredData);
+        return [...prevTestData, data];
       });
-    }
-    
+    };
 
     socket.on('1', handleSocketData);
     socket.on('2', handleSocketData);
     socket.on('3', handleSocketData);
 
     return () => {
-
+      // Cleanup socket listeners when component unmounts
+      socket.off('1', handleSocketData);
+      socket.off('2', handleSocketData);
+      socket.off('3', handleSocketData);
     };
-  }, [filteredData,eventId, marketId, eventCategory]); // Include relevant dependencies here
-  
+  }, [memoizedFilteredData, eventId, marketId, eventCategory]);
+
   return (
     <div>
       <div>Category</div>
