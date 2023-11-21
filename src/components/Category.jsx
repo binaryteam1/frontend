@@ -28,7 +28,7 @@ function Category() {
 
   useEffect(() => {
     const handleSocketData = async (data) => {
-     await  setTestData((prevTestData) => {
+     await  setTestData(async(prevTestData) => {
         const newDataArray = Array.isArray(data) ? data : [data];
         const updatedTestData = [...prevTestData, ...newDataArray];
        // Update filteredData immediately
