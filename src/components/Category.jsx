@@ -51,6 +51,7 @@ function Category() {
   // Update filteredData when testData changes
   useEffect(() => {
     setFilteredData(filtered);
+    console.log('rendering')
   }, [filtered]);
 
   return (
