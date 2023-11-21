@@ -41,10 +41,7 @@ function Category() {
     socket.on('3', handleSocketData);
 
     return () => {
-      // Cleanup socket listeners when component unmounts
-      socket.off('1', handleSocketData);
-      socket.off('2', handleSocketData);
-      socket.off('3', handleSocketData);
+
     };
   }, [filteredData,eventId, marketId, eventCategory]); // Include relevant dependencies here
 
